@@ -91,6 +91,22 @@ class Blackjack:
     def push():
         print("Its a push! Player and Dealer tie!")
 
+    def play_again_or_quit(self):
+        made_choice = False
+
+        while not made_choice:
+            try:
+                new_game = input("\nWould you like to play again? Enter 'y' or 'n': ")
+                option = new_game[0].lower()
+            except IndexError:
+                print('You must select an option.')
+            else:
+                made_choice = True
+
+                if option != 'y':
+                    print('\nThanks for playing!')
+                    self.playing = False
+
     def play(self):
         print('Welcome to Blackjack!')
 
@@ -143,21 +159,8 @@ class Blackjack:
 
             print("\nPlayer's winnings stand at", player_chips.total)
 
-            if player_chips.total == 0:
+            if player_chips.total > 0:
+                self.play_again_or_quit()
+            else:
                 print("You're out of chips. Thanks for playing!")
                 self.playing = False
-            else:
-                made_choice = False
-
-                while not made_choice:
-                    try:
-                        new_game = input("\nWould you like to play again? Enter 'y' or 'n': ")
-                        option = new_game[0].lower()
-                    except IndexError:
-                        print('You must select an option.')
-                    else:
-                        made_choice = True
-
-                        if option != 'y':
-                            print('\nThanks for playing!')
-                            self.playing = False

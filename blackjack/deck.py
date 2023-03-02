@@ -10,11 +10,7 @@ class Deck:
     )
 
     def __init__(self):
-        self.deck = []
-
-        for suit in self.suits:
-            for rank in self.ranks:
-                self.deck.append(Card(suit, rank))
+        self.deck = [Card(suit, rank) for suit in self.suits for rank in self.ranks]
 
     def __str__(self):
         deck_comp = '\n '.join(str(card) for card in self.deck)

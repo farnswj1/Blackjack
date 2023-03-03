@@ -24,13 +24,17 @@ class Hand:
         self.aces = 0  # Keep track of aces
 
     def add_card(self, card: Card):
-        self.cards.append(card)
-        self.value += self.values[card.rank]
-
         if card.rank == 'Ace':
             self.aces += 1
 
+        self.cards.append(card)
+        self.value += self.values[card.rank]
+        self.adjust_for_ace()
+
     def adjust_for_ace(self):
-        while self.value > 21 and self.aces:
+        while self.value > 21 and self.aces > 0:
             self.value -= 10
             self.aces -= 1
+
+    def has_blackjack(self):
+        return len(self.cards) == 2 and self.value == 21

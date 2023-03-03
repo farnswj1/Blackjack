@@ -8,3 +8,6 @@ class Chips:
 
     def lose_bet(self):
         self.total -= self.bet
+
+    def win_by_blackjack(self):
+        self.total += int(self.bet * 1.5)

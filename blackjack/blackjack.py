@@ -29,7 +29,6 @@ class Blackjack:
     @staticmethod
     def hit(deck: Deck, hand: Hand):
         hand.add_card(deck.deal())
-        hand.adjust_for_ace()
 
     def hit_or_stand(self, deck: Deck, hand: Hand):
         made_choice = False
@@ -58,13 +57,13 @@ class Blackjack:
         print("\nDealer's Hand: ")
         print(" <card hidden>")
         print("", dealer.cards[1])
-        print("\nPlayer's Hand: ", *player.cards, sep='\n ')
+        print("\nPlayer's Hand: ", *player.cards, sep='\n  ')
 
     @staticmethod
     def show_all(player: Hand, dealer: Hand):
-        print("\nDealer's Hand: ", *dealer.cards, sep='\n ')
+        print("\nDealer's Hand: ", *dealer.cards, sep='\n  ')
         print("Dealer's Hand =", dealer.value)
-        print("\nPlayer's Hand: ", *player.cards, sep='\n ')
+        print("\nPlayer's Hand: ", *player.cards, sep='\n  ')
         print("Player's Hand =", player.value)
 
     @staticmethod
@@ -76,6 +75,11 @@ class Blackjack:
     def player_wins(chips: Chips):
         print('PLAYER WINS!')
         chips.win_bet()
+
+    @staticmethod
+    def player_wins_by_blackjack(chips: Chips):
+        print('PLAYER WINS BY BLACKJACK!')
+        chips.win_by_blackjack()
 
     @staticmethod
     def dealer_busts(chips: Chips):
@@ -114,48 +118,59 @@ class Blackjack:
         player_chips = Chips()
 
         while self.playing:
+            # Ask the player for a bet
+            self.take_bet(player_chips)
+
             # Create a shuffled deck
             deck = Deck()
             deck.shuffle()
 
+            # Create hands for the player and dealer
             player_hand = Hand()
-            player_hand.add_card(deck.deal())
-            player_hand.add_card(deck.deal())
-
             dealer_hand = Hand()
-            dealer_hand.add_card(deck.deal())
-            dealer_hand.add_card(deck.deal())
 
-            # Ask the player for a bet
-            self.take_bet(player_chips)
+            # Deal two cards to the player and dealer
+            for _ in range(2):
+                player_hand.add_card(deck.deal())
+                dealer_hand.add_card(deck.deal())
 
-            # Show the cards
-            self.show_some(player_hand, dealer_hand)
+            player_has_blackjack = player_hand.has_blackjack()
+            dealer_has_blackjack = dealer_hand.has_blackjack()
 
-            self.player_turn = True
-
-            while self.player_turn:
-                self.hit_or_stand(deck, player_hand)
-                self.show_some(player_hand, dealer_hand)
-
-                if player_hand.value > 21:
-                    self.player_busts(player_chips)
-                    self.player_turn = False
-
-            if player_hand.value <= 21:
-                while dealer_hand.value < 17:
-                    self.hit(deck, dealer_hand)
-
-                self.show_all(player_hand, dealer_hand)
-
-                if dealer_hand.value > 21:
-                    self.dealer_busts(player_chips)
-                elif dealer_hand.value > player_hand.value:
-                    self.dealer_wins(player_chips)
-                elif dealer_hand.value < player_hand.value:
-                    self.player_wins(player_chips)
-                else:
+            # Player wins by Blackjack if the dealer don't have a Blackjack too.
+            # Otherwise, the player must hit or stand to try to win
+            if player_has_blackjack:
+                if dealer_has_blackjack:
                     self.push()
+                else:
+                    self.show_all(player_hand, dealer_hand)
+                    self.player_wins_by_blackjack(player_chips)
+            else:
+                self.player_turn = True
+
+                while self.player_turn:
+                    self.show_some(player_hand, dealer_hand)
+                    self.hit_or_stand(deck, player_hand)
+
+                    if player_hand.value > 21:
+                        self.show_some(player_hand, dealer_hand)
+                        self.player_busts(player_chips)
+                        self.player_turn = False  # Player's turn ends if they bust
+
+                if player_hand.value <= 21:
+                    while dealer_hand.value < 17:
+                        self.hit(deck, dealer_hand)
+
+                    self.show_all(player_hand, dealer_hand)
+
+                    if dealer_hand.value > 21:
+                        self.dealer_busts(player_chips)
+                    elif dealer_hand.value > player_hand.value:
+                        self.dealer_wins(player_chips)
+                    elif dealer_hand.value < player_hand.value:
+                        self.player_wins(player_chips)
+                    else:
+                        self.push()
 
             print("\nPlayer's winnings stand at", player_chips.total)
 

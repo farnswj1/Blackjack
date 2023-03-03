@@ -20,7 +20,7 @@ class Blackjack:
                 print('Sorry! Please submit a number: ')
             else:
                 if chips.bet > chips.total:
-                    print(f"You bet can't exceed {chips.total}!")
+                    print(f"Your bet can't exceed {chips.total}!")
                 elif chips.bet <= 0:
                     print('You must bet at least 1 chip.')
                 else:

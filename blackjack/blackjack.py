@@ -153,9 +153,8 @@ class Blackjack:
                     self.hit_or_stand(deck, player_hand)
 
                     if player_hand.value > 21:
-                        self.show_some(player_hand, dealer_hand)
-                        self.player_busts(player_chips)
-                        self.player_turn = False  # Player's turn ends if they bust
+                        # Player's turn ends if they bust
+                        self.player_turn = False
 
                 if player_hand.value <= 21:
                     while dealer_hand.value < 17:
@@ -171,6 +170,9 @@ class Blackjack:
                         self.player_wins(player_chips)
                     else:
                         self.push()
+                else:
+                    self.show_some(player_hand, dealer_hand)
+                    self.player_busts(player_chips)
 
             print("\nPlayer's winnings stand at", player_chips.total)
 

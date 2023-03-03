@@ -55,7 +55,7 @@ class Blackjack:
     @staticmethod
     def show_some(player: Hand, dealer: Hand):
         print("\nDealer's Hand: ")
-        print(" <card hidden>")
+        print("  <card hidden>")
         print("", dealer.cards[1])
         print("\nPlayer's Hand: ", *player.cards, sep='\n  ')
 

@@ -8,7 +8,7 @@ use super::card::Card;
 const SUITS: &'static [&'static str] = &["Hearts", "Diamonds", "Spades", "Clubs"];
 const RANKS: &'static [&'static str] = &[
     "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
-"Nine", "Ten", "Jack", "Queen", "King", "Ace"
+    "Nine", "Ten", "Jack", "Queen", "King", "Ace"
 ];
 
 pub struct Deck {

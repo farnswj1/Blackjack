@@ -21,7 +21,7 @@ impl Chips {
 
     /// Increases the total by 1.5x the value of the bet.
     pub fn win_by_blackjack(&mut self) {
-        let earnings = self.bet / 2;
-        self.total += self.bet + earnings;
+        let bonus = self.bet / 2;
+        self.total += self.bet + bonus;
     }
 }

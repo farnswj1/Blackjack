@@ -21,7 +21,7 @@ impl Hand {
         }
 
         self.cards.push(card);
-        self.value += card.value();
+        self.value += card.value().unwrap();
         self.adjust_for_ace();
     }
 

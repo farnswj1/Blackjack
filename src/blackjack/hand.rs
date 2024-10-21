@@ -45,6 +45,6 @@ impl Hand {
 
     /// Shows all cards in the hand.
     pub fn show_all(&self) -> String {
-        format!("Hand:\n  {}", self.cards.iter().map(|card| format!("{card}")).join("\n  "))
+        format!("Hand:{}", self.cards.iter().map(|card| format!("\n  {card}")).join(""))
     }
 }

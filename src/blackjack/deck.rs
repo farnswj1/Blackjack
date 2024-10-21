@@ -41,8 +41,8 @@ impl Display for Deck {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result {
         let deck_comp = self.cards
             .iter()
-            .map(|card| format!("{card}"))
-            .join("\n ");
-        write!(f, "The deck has:\n{deck_comp}")
+            .map(|card| format!("\n  {card}"))
+            .join("");
+        write!(f, "The deck has:{deck_comp}")
     }
 }

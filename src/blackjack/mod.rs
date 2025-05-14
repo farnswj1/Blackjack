@@ -3,6 +3,7 @@ mod chips;
 mod deck;
 mod game;
 mod hand;
+mod player;
 
 use game::Blackjack;
 

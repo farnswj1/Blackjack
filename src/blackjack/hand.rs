@@ -33,7 +33,7 @@ impl Hand {
         }
     }
 
-    /// Checks if the player has a Blackjack.
+    /// Checks if the hand has a Blackjack.
     pub fn has_blackjack(&self) -> bool {
         self.cards.len() == 2 && self.value == 21
     }
@@ -46,5 +46,12 @@ impl Hand {
     /// Shows all cards in the hand.
     pub fn show_all(&self) -> String {
         format!("Hand:{}", self.cards.iter().map(|card| format!("\n  {card}")).join(""))
+    }
+
+    /// Resets the hand by removing all cards.
+    pub fn reset(&mut self) {
+        self.cards.clear();
+        self.value = 0;
+        self.aces = 0;
     }
 }

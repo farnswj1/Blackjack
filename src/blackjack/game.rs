@@ -1,4 +1,4 @@
-use super::{deck::Deck, player::{self, Player}};
+use super::{deck::Deck, player::Player};
 
 pub struct Blackjack {
     player: Player,

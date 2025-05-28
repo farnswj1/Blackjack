@@ -51,11 +51,12 @@ impl Blackjack {
             // Player wins by Blackjack if the dealer don't have a Blackjack too.
             // Otherwise, the player must hit or stand to try to win.
             if self.player.has_blackjack() {
+                self.show_all();
+
                 if self.dealer.has_blackjack() {
                     self.push();
                 }
                 else {
-                    self.show_all();
                     println!("PLAYER WINS BY BLACKJACK!");
                     self.player.win_by_blackjack();
                 }
